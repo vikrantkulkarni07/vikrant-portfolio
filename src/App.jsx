@@ -33,7 +33,8 @@ const PORTFOLIO_DATA = {
     medium: "https://medium.com/@VikrantKulkarni",
     blogger: "https://vikrantkulkarni07.blogspot.com",
     portfolio: "https://vikrantkulkarni07.github.io/portfolio/",
-    miniProjects: "https://vikranthw.netlify.app"
+    miniProjects: "https://vikranthw.netlify.app",
+    youtube: "http://www.youtube.com/@VikrantCreatez"
   },
   skills: {
     "Programming": ["C", "C++", "Java", "Python", "Embedded C"],
@@ -726,9 +727,10 @@ const ProfilesAndContent = () => {
     { name: "LeetCode", url: PORTFOLIO_DATA.links.leetcode, icon: Code2, hover: "group-hover:text-[#FFA116] group-hover:border-[#FFA116]/25" },
     { name: "HackerRank", url: PORTFOLIO_DATA.links.hackerrank, icon: Terminal, hover: "group-hover:text-[#00EA64] group-hover:border-[#00EA64]/25" }
   ];
-  const content = [
+ const content = [
     { name: "Medium", url: PORTFOLIO_DATA.links.medium, icon: BookOpen },
-    { name: "Blogger", url: PORTFOLIO_DATA.links.blogger, icon: Globe }
+    { name: "Blogger", url: PORTFOLIO_DATA.links.blogger, icon: Globe },
+    { name: "YouTube", url: PORTFOLIO_DATA.links.youtube, icon: MonitorPlay }
   ];
   return (
     <section className="py-28 bg-[#020617] relative z-10">
