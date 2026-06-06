@@ -48,7 +48,7 @@ const PORTFOLIO_DATA = {
       description: "An end-to-end IoT healthcare monitoring ecosystem featuring custom hardware integration, real-time dashboards, and seamless patient-doctor interaction capabilities.",
       tags: ["IoT", "Hardware", "Real-time", "Dashboard"],
       link: "#",
-      image: "https://drive.google.com/thumbnail?id=1h4ItSRQUugD9rI158DBEHLNMtoC0bEa3&sz=w1200",
+      image: "https://drive.google.com/thumbnail?id=1AJF4AjwY6tFE67uHQP8KGFOgrMlkFKbi&sz=w1200",
       isFlagship: true
     },
     {
