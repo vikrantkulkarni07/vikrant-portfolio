@@ -309,6 +309,7 @@ const Navigation = () => {
               { icon: Github, url: PORTFOLIO_DATA.links.github },
               { icon: Linkedin, url: PORTFOLIO_DATA.links.linkedin },
               { icon: Mail, url: `mailto:${PORTFOLIO_DATA.personal.email}` },
+              { icon: MonitorPlay, url: PORTFOLIO_DATA.links.youtube },
             ].map(({ icon: Icon, url }, i) => (
               <a key={i} href={url} target="_blank" rel="noreferrer"
                 className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all">
