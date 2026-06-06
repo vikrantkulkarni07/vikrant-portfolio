@@ -794,6 +794,7 @@ const Footer = () => (
           {[
             { icon: Github, url: PORTFOLIO_DATA.links.github, label: "GitHub" },
             { icon: Linkedin, url: PORTFOLIO_DATA.links.linkedin, label: "LinkedIn" },
+            { icon: MonitorPlay, url: PORTFOLIO_DATA.links.youtube, label: "YouTube" },
             { icon: Mail, url: `mailto:${PORTFOLIO_DATA.personal.email}`, label: "Email" }
           ].map(s => (
             <a key={s.label} href={s.url} target="_blank" rel="noreferrer" aria-label={s.label}
