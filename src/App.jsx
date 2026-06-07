@@ -110,6 +110,11 @@ const PORTFOLIO_DATA = {
       isFlagship: false
     }
   ],
+  education: {
+    degree: "BE Electronics & Telecommunication Engineering",
+    institute: "Dr. D. Y. Patil Institute of Technology, Pimpri, Pune",
+    year: "2024 – 2028"
+  },
   achievements: [
     "Hackathon Winner - TarangSetu",
     "GSSoC 2026 Contributor",
@@ -479,7 +484,18 @@ const About = () => {
                 </ul>
               </TiltCard>
             </CinematicReveal>
-
+            <CinematicReveal delay={420}>
+  <TiltCard className="bg-slate-900/40 border border-white/5 rounded-3xl p-8">
+    <h3 className="flex items-center gap-3 text-white font-bold mb-5 text-base tracking-wider uppercase">
+      <BookOpen className="text-cyan-400" size={20} /> Education
+    </h3>
+    <div className="relative z-10">
+      <p className="text-white font-semibold">{PORTFOLIO_DATA.education.degree}</p>
+      <p className="text-slate-400 text-sm mt-1">{PORTFOLIO_DATA.education.institute}</p>
+      <p className="text-cyan-400/70 font-mono text-xs mt-2">{PORTFOLIO_DATA.education.year}</p>
+    </div>
+  </TiltCard>
+</CinematicReveal>
             <CinematicReveal delay={500}>
               <TiltCard className="bg-slate-900/40 border border-white/5 rounded-3xl p-8">
                 <h3 className="flex items-center gap-3 text-white font-bold mb-6 text-base tracking-wider uppercase">
