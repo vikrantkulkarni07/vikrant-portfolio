@@ -398,7 +398,7 @@ const Hero = () => {
           </CinematicReveal>
           <CinematicReveal delay={650} direction="up">
             <div className="flex flex-wrap justify-center md:justify-start gap-3">
-              <Button href="#projects" primary icon={ArrowUpRight}>Explore Systems</Button>
+              <Button href="#projects" primary icon={ArrowUpRight} target="_self">Explore Systems</Button>
               <Button href={PORTFOLIO_DATA.links.miniProjects} icon={Zap}>Engineering Lab</Button>
             </div>
           </CinematicReveal>
