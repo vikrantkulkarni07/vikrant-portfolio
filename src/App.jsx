@@ -125,7 +125,47 @@ const PORTFOLIO_DATA = {
     "Embedded Systems Design - Maven Silicon",
     "MATLAB Onramp",
     "More to be added soon..."
-  ]
+  ],
+  startups: [
+    {
+      name: "PrintsPass",
+      tagline: "Smart Photo Gridding & Printing Platform",
+      description: "A SaaS platform that streamlines photo formatting and print preparation. Built for studios and freelancers who need fast, reliable photo grid outputs.",
+      url: "https://printspass.site/",
+      tags: ["SaaS", "Image Processing", "Print Tech"],
+      metrics: [
+        { label: "Photo Studios", value: "15+" },
+        { label: "Freelancers", value: "10+" },
+        { label: "Images Processed", value: "1000+" },
+        { label: "Cities Reached", value: "5+" }
+      ]
+    },
+    {
+      name: "AveVibe",
+      tagline: "E-Commerce Fashion Store + Seller ERP",
+      description: "A full-stack fashion e-commerce platform with a storefront for customers and a dedicated ERP system for sellers to manage inventory, stock, and orders in real time.",
+      url: "https://avevibe.netlify.app/",
+      tags: ["E-Commerce", "ERP", "Inventory", "Storefront"],
+      metrics: []
+    }
+  ],
+  openSource: [
+    {
+      name: "Magic Resistors",
+      description: "A fast, responsive web utility for decoding resistor color bands instantly. Built as a community contribution for electronics students and hobbyists.",
+      url: "https://magicresistors.online/",
+      tags: ["Open Source", "Engineering Tool", "Community"],
+      github: "https://github.com/vikrantkulkarni07"
+    }
+  ],
+  story: {
+    paragraphs: [
+      "It started with curiosity — pulling apart old electronics, wondering why circuits behaved the way they did. That curiosity never left. It just evolved into something bigger.",
+      "I don't fit neatly into 'software developer' or 'hardware engineer'. I sit at the intersection — routing PCB traces in the morning, deploying web apps by evening. Every project I build is an attempt to collapse that boundary a little further.",
+      "TarangSetu was built in a hackathon room at 2am. Sensic-U started as a sketch on the back of a notebook. PrintsPass came from watching photo studio owners manually crop images for hours. The pattern is always the same — spot a real problem, build a real solution.",
+      "Technology keeps driving me forward not because it's trendy, but because it's the most powerful tool I've found for turning ideas into things people can actually use. That's the only metric I care about."
+    ]
+  }
 };
 
 // --- HOOKS ---
@@ -186,10 +226,14 @@ const TiltCard = ({ children, className = "" }) => {
   };
   const handleMouseLeave = () => {
     setRotate({ x: 0, y: 0 });
-    if (cardRef.current) { cardRef.current.style.setProperty("--mouse-x", "-1000px"); cardRef.current.style.setProperty("--mouse-y", "-1000px"); }
+    if (cardRef.current) {
+      cardRef.current.style.setProperty("--mouse-x", "-1000px");
+      cardRef.current.style.setProperty("--mouse-y", "-1000px");
+    }
   };
   return (
-    <div ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} className={`tilt-card ${className}`}
+    <div ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
+      className={`tilt-card ${className}`}
       style={{ transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`, transition: 'transform 0.15s ease-out' }}>
       <div className="tilt-card-content">{children}</div>
     </div>
@@ -202,15 +246,19 @@ const Button = ({ href, primary, children, icon: Icon, target = "_blank" }) => {
   const sec  = "bg-white/5 backdrop-blur-md text-slate-300 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:text-white";
   const C = href ? 'a' : 'button';
   return (
-    <C href={href} target={href && href !== '#' ? target : undefined} rel={href && href !== '#' ? "noopener noreferrer" : undefined}
+    <C href={href} target={href && href !== '#' ? target : undefined}
+      rel={href && href !== '#' ? "noopener noreferrer" : undefined}
       className={`${base} ${primary ? prim : sec}`}>
       {primary && <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />}
-      <span className="relative z-10 flex items-center gap-2">{children}{Icon && <Icon size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}</span>
+      <span className="relative z-10 flex items-center gap-2">
+        {children}
+        {Icon && <Icon size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
+      </span>
     </C>
   );
 };
 
-// --- NAVIGATION (Mobile Responsive + Transparent) ---
+// --- NAVIGATION ---
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -221,7 +269,6 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -231,12 +278,12 @@ const Navigation = () => {
     { label: "About", href: "#about" },
     { label: "Arsenal", href: "#skills" },
     { label: "Systems", href: "#projects" },
+    { label: "Startups", href: "#startups" },
     { label: "Communicate", href: "#contact" },
   ];
 
   const handleNavClick = (href) => {
     setMenuOpen(false);
-    // small delay so menu closes before scroll
     setTimeout(() => { document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }); }, 100);
   };
 
@@ -245,10 +292,9 @@ const Navigation = () => {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
           ? 'bg-black/40 backdrop-blur-2xl border-b border-white/[0.06] py-3 shadow-[0_4px_40px_rgba(0,0,0,0.6)]'
-          : 'bg-transparent backdrop-blur-none py-6'
+          : 'bg-transparent py-6'
       }`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
           <a href="#" className="flex items-center gap-3 group z-10">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 flex items-center justify-center relative overflow-hidden shadow-[0_0_16px_rgba(6,182,212,0.35)]">
               <span className="relative z-10 text-white font-black text-sm tracking-tight">VK</span>
@@ -258,7 +304,6 @@ const Navigation = () => {
             </span>
           </a>
 
-          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
             {navLinks.map(link => (
               <a key={link.label} href={link.href}
@@ -269,7 +314,6 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden relative z-10 w-10 h-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-md text-slate-300 hover:text-white hover:border-white/20 transition-all"
@@ -280,41 +324,31 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Mobile Fullscreen Menu */}
       <div className={`fixed inset-0 z-40 transition-all duration-500 md:hidden ${
         menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}>
-        {/* Frosted backdrop */}
         <div className="absolute inset-0 bg-black/80 backdrop-blur-2xl" onClick={() => setMenuOpen(false)} />
-
-        {/* Menu panel */}
         <div className={`absolute top-0 right-0 h-full w-72 bg-slate-950/90 border-l border-white/[0.07] flex flex-col pt-24 pb-10 px-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
-          {/* Glow accent */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 blur-[80px] rounded-full pointer-events-none" />
-
           <nav className="flex flex-col gap-2">
             {navLinks.map((link, i) => (
-              <button
-                key={link.label}
-                onClick={() => handleNavClick(link.href)}
+              <button key={link.label} onClick={() => handleNavClick(link.href)}
                 className="text-left py-4 px-4 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/[0.08] transition-all duration-200 font-semibold text-xl tracking-wide group"
-                style={{ transitionDelay: menuOpen ? `${i * 60}ms` : '0ms' }}
-              >
+                style={{ transitionDelay: menuOpen ? `${i * 60}ms` : '0ms' }}>
                 <span className="text-cyan-400/60 font-mono text-xs mr-3">0{i + 1}.</span>
                 {link.label}
                 <ChevronRight size={16} className="inline ml-2 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-400" />
               </button>
             ))}
           </nav>
-
-          <div className="mt-auto border-t border-white/[0.06] pt-8 flex gap-4">
+          <div className="mt-auto border-t border-white/[0.06] pt-8 flex gap-3">
             {[
               { icon: Github, url: PORTFOLIO_DATA.links.github },
               { icon: Linkedin, url: PORTFOLIO_DATA.links.linkedin },
-              { icon: Mail, url: `mailto:${PORTFOLIO_DATA.personal.email}` },
               { icon: MonitorPlay, url: PORTFOLIO_DATA.links.youtube },
+              { icon: Mail, url: `mailto:${PORTFOLIO_DATA.personal.email}` },
             ].map(({ icon: Icon, url }, i) => (
               <a key={i} href={url} target="_blank" rel="noreferrer"
                 className="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all">
@@ -328,7 +362,7 @@ const Navigation = () => {
   );
 };
 
-// --- HERO ---
+// --- INTERSTELLAR BACKGROUND ---
 const InterstellarBackground = () => {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -374,62 +408,86 @@ const InterstellarBackground = () => {
   return <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-80" />;
 };
 
+// --- HERO ---
 const Hero = () => {
   const { text: rotatingText, fade } = useRotatingText(PORTFOLIO_DATA.personal.taglines);
+
+  const socialLinks = [
+    { label: "GitHub", icon: Github, url: PORTFOLIO_DATA.links.github, color: "hover:text-white hover:border-white/30" },
+    { label: "LinkedIn", icon: Linkedin, url: PORTFOLIO_DATA.links.linkedin, color: "hover:text-[#0A66C2] hover:border-[#0A66C2]/40" },
+    { label: "LeetCode", icon: Code2, url: PORTFOLIO_DATA.links.leetcode, color: "hover:text-[#FFA116] hover:border-[#FFA116]/40" },
+    { label: "HackerRank", icon: Terminal, url: PORTFOLIO_DATA.links.hackerrank, color: "hover:text-[#00EA64] hover:border-[#00EA64]/40" },
+    { label: "YouTube", icon: MonitorPlay, url: PORTFOLIO_DATA.links.youtube, color: "hover:text-red-400 hover:border-red-400/40" },
+    { label: "vikrant2007yt@gmail.com", icon: Mail, url: "mailto:vikrant2007yt@gmail.com", color: "hover:text-cyan-400 hover:border-cyan-500/40" },
+  ];
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex flex-col overflow-hidden">
       <InterstellarBackground />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 w-full">
-        <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-          <CinematicReveal delay={100} direction="right">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-4 leading-[1.05]">
-              HI, I'M <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">VIKRANT</span>
-            </h1>
-          </CinematicReveal>
-          <CinematicReveal delay={400} direction="right">
-            <div className="h-14 flex items-center justify-center md:justify-start mb-8 border-l-2 border-cyan-500/50 pl-4">
-              <h2 className={`text-lg md:text-xl font-light text-slate-400 transition-opacity duration-500 ${fade ? 'opacity-100' : 'opacity-0'}`}>
-                {rotatingText}
-              </h2>
-            </div>
-          </CinematicReveal>
-          <CinematicReveal delay={650} direction="up">
-            <div className="flex flex-wrap justify-center md:justify-start gap-3">
-              <Button href="#projects" primary icon={ArrowUpRight} target="_self">Explore Systems</Button>
-              <Button href={PORTFOLIO_DATA.links.miniProjects} icon={Zap}>Engineering Lab</Button>
-            </div>
-          </CinematicReveal>
-        </div>
+      {/* Main hero content — centered in available space */}
+      <div className="relative z-10 flex-1 flex items-center pt-24 pb-8">
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
 
-        <div className="flex-1 flex justify-center md:justify-end w-full max-w-sm">
-          <CinematicReveal delay={500} direction="left" className="relative group">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-cyan-500/15 blur-[90px] rounded-full mix-blend-screen group-hover:bg-cyan-400/25 transition-all duration-700" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-indigo-500/15 blur-[60px] rounded-full mix-blend-screen animate-pulse" />
-            <div className="relative z-10 w-60 h-60 md:w-72 md:h-72 rounded-full p-[3px] bg-gradient-to-br from-cyan-400/30 via-transparent to-indigo-500/30 shadow-[0_0_60px_rgba(0,0,0,0.8)]">
-              <div className="absolute inset-0 rounded-full border border-cyan-500/20 border-t-cyan-400/60 animate-[spin_12s_linear_infinite]" />
-              <div className="absolute inset-[-12px] rounded-full border border-dashed border-slate-700/50 animate-[spin_24s_linear_infinite_reverse]" />
-              <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 rounded-full" />
-                <img src={PORTFOLIO_DATA.personal.profileImage} alt={PORTFOLIO_DATA.personal.name}
-                  className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+          {/* Left */}
+          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+            <CinematicReveal delay={100} direction="right">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-4 leading-[1.05]">
+                HI, I'M <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
+                  VIKRANT
+                </span>
+              </h1>
+            </CinematicReveal>
+
+            <CinematicReveal delay={400} direction="right">
+              <div className="h-14 flex items-center justify-center md:justify-start mb-8 border-l-2 border-cyan-500/50 pl-4">
+                <h2 className={`text-lg md:text-xl font-light text-slate-400 transition-opacity duration-500 ${fade ? 'opacity-100' : 'opacity-0'}`}>
+                  {rotatingText}
+                </h2>
               </div>
-            </div>
-            <div className="absolute -right-3 top-8 bg-black/70 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl animate-[float_4s_ease-in-out_infinite]">
-              <Cpu className="text-cyan-400" size={22} />
-            </div>
-            <div className="absolute -left-6 bottom-16 bg-black/70 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl animate-[float_5s_ease-in-out_1s_infinite_reverse]">
-              <MonitorPlay className="text-indigo-400" size={22} />
-            </div>
-          </CinematicReveal>
+            </CinematicReveal>
+
+            <CinematicReveal delay={650} direction="up">
+              <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                <Button href="#projects" primary icon={ArrowUpRight} target="_self">Explore Systems</Button>
+                <Button href={PORTFOLIO_DATA.links.miniProjects} icon={Zap}>Engineering Lab</Button>
+              </div>
+            </CinematicReveal>
+          </div>
+
+          {/* Right — profile image */}
+          <div className="flex-shrink-0 flex justify-center md:justify-end">
+            <CinematicReveal delay={500} direction="left" className="relative group">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-cyan-500/15 blur-[90px] rounded-full mix-blend-screen group-hover:bg-cyan-400/25 transition-all duration-700" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-indigo-500/15 blur-[60px] rounded-full mix-blend-screen animate-pulse" />
+              <div className="relative z-10 w-56 h-56 md:w-72 md:h-72 rounded-full p-[3px] bg-gradient-to-br from-cyan-400/30 via-transparent to-indigo-500/30 shadow-[0_0_60px_rgba(0,0,0,0.8)]">
+                <div className="absolute inset-0 rounded-full border border-cyan-500/20 border-t-cyan-400/60 animate-[spin_12s_linear_infinite]" />
+                <div className="absolute inset-[-12px] rounded-full border border-dashed border-slate-700/50 animate-[spin_24s_linear_infinite_reverse]" />
+                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 rounded-full" />
+                  <img src={PORTFOLIO_DATA.personal.profileImage} alt={PORTFOLIO_DATA.personal.name}
+                    className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+                </div>
+              </div>
+              <div className="absolute -right-3 top-8 bg-black/70 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl animate-[float_4s_ease-in-out_infinite]">
+                <Cpu className="text-cyan-400" size={22} />
+              </div>
+              <div className="absolute -left-6 bottom-16 bg-black/70 backdrop-blur-md border border-white/10 p-3 rounded-xl shadow-2xl animate-[float_5s_ease-in-out_1s_infinite_reverse]">
+                <MonitorPlay className="text-indigo-400" size={22} />
+              </div>
+            </CinematicReveal>
+          </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[9px] uppercase font-mono tracking-[0.2em] text-white">Scroll to Initiate</span>
-        <div className="w-px h-10 bg-gradient-to-b from-cyan-500 to-transparent animate-pulse" />
+     
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30 z-10">
+        <span className="text-[9px] uppercase font-mono tracking-[0.2em] text-white">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-cyan-500 to-transparent animate-pulse" />
       </div>
     </section>
   );
@@ -484,18 +542,20 @@ const About = () => {
                 </ul>
               </TiltCard>
             </CinematicReveal>
+
             <CinematicReveal delay={420}>
-  <TiltCard className="bg-slate-900/40 border border-white/5 rounded-3xl p-8">
-    <h3 className="flex items-center gap-3 text-white font-bold mb-5 text-base tracking-wider uppercase">
-      <BookOpen className="text-cyan-400" size={20} /> Education
-    </h3>
-    <div className="relative z-10">
-      <p className="text-white font-semibold">{PORTFOLIO_DATA.education.degree}</p>
-      <p className="text-slate-400 text-sm mt-1">{PORTFOLIO_DATA.education.institute}</p>
-      <p className="text-cyan-400/70 font-mono text-xs mt-2">{PORTFOLIO_DATA.education.year}</p>
-    </div>
-  </TiltCard>
-</CinematicReveal>
+              <TiltCard className="bg-slate-900/40 border border-white/5 rounded-3xl p-8">
+                <h3 className="flex items-center gap-3 text-white font-bold mb-5 text-base tracking-wider uppercase">
+                  <BookOpen className="text-cyan-400" size={20} /> Education
+                </h3>
+                <div className="relative z-10">
+                  <p className="text-white font-semibold">{PORTFOLIO_DATA.education.degree}</p>
+                  <p className="text-slate-400 text-sm mt-1">{PORTFOLIO_DATA.education.institute}</p>
+                  <p className="text-cyan-400/70 font-mono text-xs mt-2">{PORTFOLIO_DATA.education.year}</p>
+                </div>
+              </TiltCard>
+            </CinematicReveal>
+
             <CinematicReveal delay={500}>
               <TiltCard className="bg-slate-900/40 border border-white/5 rounded-3xl p-8">
                 <h3 className="flex items-center gap-3 text-white font-bold mb-6 text-base tracking-wider uppercase">
@@ -516,7 +576,7 @@ const About = () => {
                     </span>
                     <ChevronRight className={`text-slate-500 transition-transform duration-300 ${showCerts ? 'rotate-90' : ''}`} size={18} />
                   </button>
-                  <div className={`overflow-hidden transition-all duration-400 ${showCerts ? 'max-h-64 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+                  <div className={`overflow-hidden transition-all duration-500 ${showCerts ? 'max-h-64 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
                     <ul className="space-y-2.5 px-2 pt-1">
                       {PORTFOLIO_DATA.certifications.map((cert, i) => (
                         <li key={i} className="flex items-start gap-2.5 text-slate-300 text-sm">
@@ -597,37 +657,25 @@ const Projects = () => {
           </div>
         </CinematicReveal>
 
-        {/* Flagship Projects */}
         <div className="space-y-28 mb-28">
           {flagship.map((project, idx) => (
             <CinematicReveal key={project.title} delay={100} direction={idx % 2 === 0 ? "right" : "left"}>
               <div className="relative grid md:grid-cols-12 gap-8 items-center group">
-
-                {/* Image Panel */}
                 <div className={`md:col-span-7 ${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
                   <TiltCard className="w-full">
-                    <a href={project.link !== '#' ? project.link : undefined}
-                      target="_blank" rel="noreferrer"
+                    <a href={project.link !== '#' ? project.link : undefined} target="_blank" rel="noreferrer"
                       className="block relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-900 border border-white/8 group-hover:border-cyan-500/30 transition-all duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
-                      
-                      {/* Actual project image */}
                       {project.image && !imgErrors[project.title] ? (
                         <>
-                          <img
-                            src={project.image}
-                            alt={project.title}
+                          <img src={project.image} alt={project.title}
                             onError={() => setImgErrors(e => ({ ...e, [project.title]: true }))}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                          {/* Subtle overlay on hover */}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-                          {/* Top-right tag */}
                           <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-cyan-400 font-mono text-[10px] tracking-widest uppercase">
                             {project.category}
                           </div>
                         </>
                       ) : (
-                        /* Fallback if image fails */
                         <>
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/30 via-slate-900 to-blue-900/30" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
@@ -642,7 +690,6 @@ const Projects = () => {
                   </TiltCard>
                 </div>
 
-                {/* Content Panel */}
                 <div className={`md:col-span-5 ${idx % 2 === 0 ? 'md:order-2 md:text-right' : 'md:order-1 md:text-left'}`}>
                   <div className="inline-block px-3 py-1 mb-4 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-[10px] tracking-wider uppercase">
                     ✦ Featured
@@ -672,7 +719,6 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Other Projects Grid */}
         <CinematicReveal direction="up">
           <div className="flex items-center gap-4 mb-10">
             <h3 className="text-2xl font-bold text-white tracking-wide">Other Projects</h3>
@@ -715,6 +761,112 @@ const Projects = () => {
   );
 };
 
+// --- STARTUPS ---
+const Startups = () => (
+  <section id="startups" className="py-28 relative bg-[#020617] border-t border-white/5">
+    <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-indigo-900/8 blur-[120px] rounded-full pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <CinematicReveal>
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">04.</span> STARTUPS
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-indigo-900/60 to-transparent" />
+        </div>
+      </CinematicReveal>
+
+      <div className="grid md:grid-cols-2 gap-8">
+        {PORTFOLIO_DATA.startups.map((startup, idx) => (
+          <CinematicReveal key={startup.name} delay={idx * 150} direction="up">
+            <TiltCard className="h-full">
+              <div className="h-full p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-indigo-500/25 flex flex-col group relative overflow-hidden transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/0 to-purple-600/0 group-hover:from-indigo-500/4 group-hover:to-purple-600/4 transition-colors duration-500" />
+                <div className="flex items-start justify-between mb-6 relative z-10">
+                  <div>
+                    <div className="inline-block px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-mono text-[10px] tracking-wider uppercase mb-3">
+                      Startup
+                    </div>
+                    <h3 className="text-2xl font-black text-white group-hover:text-indigo-300 transition-colors">{startup.name}</h3>
+                    <p className="text-slate-500 text-sm font-mono mt-1">{startup.tagline}</p>
+                  </div>
+                  <a href={startup.url} target="_blank" rel="noreferrer"
+                    className="p-2.5 rounded-xl border border-white/5 text-slate-500 hover:text-indigo-400 hover:border-indigo-500/30 transition-all flex-shrink-0">
+                    <ExternalLink size={18} />
+                  </a>
+                </div>
+                <p className="text-slate-400 text-sm leading-relaxed font-light mb-6 relative z-10 flex-grow">{startup.description}</p>
+                {startup.metrics.length > 0 && (
+                  <div className="grid grid-cols-2 gap-3 mb-6 relative z-10">
+                    {startup.metrics.map((m, i) => (
+                      <div key={i} className="p-3 rounded-xl bg-black/40 border border-white/5 text-center">
+                        <p className="text-xl font-black text-indigo-400">{m.value}</p>
+                        <p className="text-[10px] text-slate-500 font-mono mt-0.5">{m.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-2 relative z-10">
+                  {startup.tags.map(tag => (
+                    <span key={tag} className="px-2.5 py-1 text-[10px] font-mono rounded-md bg-black/50 text-slate-500 border border-white/5">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </TiltCard>
+          </CinematicReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// --- OPEN SOURCE ---
+const OpenSource = () => (
+  <section className="py-28 relative bg-[#020617] border-t border-white/5">
+    <div className="absolute bottom-0 left-1/4 w-[400px] h-[300px] bg-cyan-900/5 blur-[100px] rounded-full pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <CinematicReveal>
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">05.</span> OPEN SOURCE & COMMUNITY
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-green-900/60 to-transparent" />
+        </div>
+      </CinematicReveal>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {PORTFOLIO_DATA.openSource.map((item, idx) => (
+          <CinematicReveal key={item.name} delay={idx * 100} direction="up">
+            <TiltCard className="h-full">
+              <div className="h-full p-7 rounded-3xl bg-slate-900/30 border border-white/5 hover:border-green-500/20 flex flex-col group relative overflow-hidden transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 to-cyan-500/0 group-hover:from-green-500/4 group-hover:to-cyan-500/4 transition-colors duration-500" />
+                <div className="flex justify-between items-start mb-6 relative z-10">
+                  <div className="p-3 rounded-xl bg-black/50 border border-white/5 text-green-400/70 group-hover:border-green-500/25 transition-all">
+                    <Github size={22} strokeWidth={1.5} />
+                  </div>
+                  <div className="flex gap-2">
+                    <a href={item.github} target="_blank" rel="noreferrer" className="p-2 rounded-lg border border-white/5 text-slate-600 hover:text-green-400 hover:border-green-500/25 transition-all">
+                      <Github size={16} />
+                    </a>
+                    <a href={item.url} target="_blank" rel="noreferrer" className="p-2 rounded-lg border border-white/5 text-slate-600 hover:text-cyan-400 hover:border-cyan-500/25 transition-all">
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
+                </div>
+                <h4 className="text-xl font-bold text-white mb-3 group-hover:text-green-300 transition-colors relative z-10">{item.name}</h4>
+                <p className="text-slate-400 text-sm leading-relaxed font-light mb-6 flex-grow relative z-10">{item.description}</p>
+                <div className="flex flex-wrap gap-2 relative z-10">
+                  {item.tags.map(tag => (
+                    <span key={tag} className="px-2.5 py-1 text-[10px] font-mono rounded-md bg-black/50 text-slate-500 border border-white/5">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </TiltCard>
+          </CinematicReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 // --- LAB CTA ---
 const LabCTA = () => (
   <section className="py-28 relative overflow-hidden bg-black border-y border-white/5">
@@ -744,7 +896,7 @@ const ProfilesAndContent = () => {
     { name: "LeetCode", url: PORTFOLIO_DATA.links.leetcode, icon: Code2, hover: "group-hover:text-[#FFA116] group-hover:border-[#FFA116]/25" },
     { name: "HackerRank", url: PORTFOLIO_DATA.links.hackerrank, icon: Terminal, hover: "group-hover:text-[#00EA64] group-hover:border-[#00EA64]/25" }
   ];
- const content = [
+  const content = [
     { name: "Medium", url: PORTFOLIO_DATA.links.medium, icon: BookOpen },
     { name: "Blogger", url: PORTFOLIO_DATA.links.blogger, icon: Globe },
     { name: "YouTube", url: PORTFOLIO_DATA.links.youtube, icon: MonitorPlay }
@@ -795,6 +947,63 @@ const ProfilesAndContent = () => {
     </section>
   );
 };
+
+// --- MY STORY ---
+const MyStory = () => (
+  <section className="py-28 relative bg-[#020617] border-t border-white/5">
+    <div className="absolute top-0 left-0 w-[500px] h-[400px] bg-cyan-900/5 blur-[120px] rounded-full pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <CinematicReveal>
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">06.</span> MY STORY
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-cyan-900/60 to-transparent" />
+        </div>
+      </CinematicReveal>
+
+      <div className="grid md:grid-cols-12 gap-12 items-start">
+        <div className="md:col-span-7 space-y-6">
+          {PORTFOLIO_DATA.story.paragraphs.map((para, i) => (
+            <CinematicReveal key={i} delay={i * 150} direction="up">
+              <p className={`leading-relaxed font-light ${i === 0 ? 'text-xl text-slate-200' : 'text-base text-slate-400'}`}>
+                {i === 0 && <span className="text-cyan-400 font-bold">» </span>}
+                {para}
+              </p>
+            </CinematicReveal>
+          ))}
+        </div>
+
+        <div className="md:col-span-5 flex flex-col gap-4 md:sticky md:top-28">
+          <CinematicReveal delay={200} direction="left">
+            <div className="p-6 rounded-2xl bg-slate-900/40 border border-white/5">
+              <p className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-4">Currently Exploring</p>
+              <ul className="space-y-3">
+                {["Edge AI on embedded hardware", "Full-stack IoT ecosystems", "Open source tooling for engineers", "Scalable SaaS products"].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-slate-300 text-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" />{item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </CinematicReveal>
+          <CinematicReveal delay={350} direction="left">
+            <div className="p-6 rounded-2xl bg-slate-900/40 border border-white/5">
+              <p className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-4">Driven By</p>
+              <ul className="space-y-3">
+                {["Real problems worth solving", "Hardware meets software", "Open source & community", "Shipping things that work"].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-slate-300 text-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400/60 flex-shrink-0" />{item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </CinematicReveal>
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
 // --- FOOTER ---
 const Footer = () => (
@@ -866,8 +1075,11 @@ const App = () => (
       <About />
       <Skills />
       <Projects />
+      <Startups />
+      <OpenSource />
       <LabCTA />
       <ProfilesAndContent />
+      <MyStory />
     </main>
     <Footer />
   </div>
